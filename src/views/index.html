@@ -1,0 +1,461 @@
+{{define "StartPage"}}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta title="FlashLight - By Asef Alper Tunga Dündar">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="icon/favicon.ico">
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />  <title>FlashLight - By Asef Alper Tunga Dündar</title>
+
+  <title>FlashLight - By Asef Alper Tunga Dündar</title>
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top justify-content-center">
+      <div class="navbar-header">
+        <img class="navbar-brand" alt="Brand" src="icon/flashlight_logo_weiß.svg" style="height: 40px;">
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Public Content Page -->
+    <div id="publicImages" class="" >
+
+      <!-- Login Register Buttons -->
+      <div id="notLoggedBar" class="">
+        <div class="d-flex justify-content-center btn-group" role="group">
+
+            <!-- Login Button - Open up the Login Modal Form -->
+            <button type="button" class="btn btn-secondary flashlight-button" data-toggle="modal"
+              data-target="#loginModal">Login</button>
+
+            <!-- Register Button - Open up the Register Modal Form -->
+            <button type="button" class="btn btn-secondary flashlight-button" data-toggle="modal"
+              data-target="#registerModal">Register</button>
+
+        </div>
+      </div>
+
+      <!-- Login Register Buttons -->
+      <!-- ID: logoutForm         -->
+      <!-- ID: loggedInName       -->
+      <!-- ID: logoutButton       -->
+      <!-- ID: addImageButton     -->
+      <!-- ID: myImagesButton     -->
+      <div id="loggedBar" class="hide">
+        <div class="d-flex justify-content-center">
+          <div class="row" style="width:530px; padding:15px;">
+
+            <!-- Userinformation Area -->
+            <div class="col-6">
+              <div>
+                <h5><b id="loggedInName">Max Mustermann</b></h5>
+              </div>
+              <form id="logoutForm" method="POST" action="/users?action=logout"><button type="submit" id="logoutButton"
+                  class="btn btn-light"><small>Logout</small></button></form>
+            </div>
+
+            <!-- My Images Button Area -->
+            <div class="col-4">
+              <button id="myImagesButton" class="btn btn-secondary flashlight-button" onclick="openMyImagesPage()">Meine
+                Bilder</button></div>
+
+            <div class="col-2">
+              <button id="addImageButton" class="btn btn-secondary flashlight-button" data-toggle="modal"
+                data-target="#addImageModal"><i class="fas fa-plus"></i></button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!----- ImageCard Template ------>
+      <!--ID:    {imageID}           -->
+      <!--ID:    {imageID}/comments  -->
+      <!--class: imageElement        -->
+      <!--class: likeCounter         -->
+      <!--class: imageDescription    -->
+      <!--class: userName            -->
+      <!--class: datetime            -->
+      <!--class: likeButton          -->
+      <!--class: likeButtonContainer -->
+      <!--class: userName            -->
+      <!--class: commentsCounter     -->
+      <template id="imageCardTemplate">
+        <div class="d-flex justify-content-center">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-header">
+
+                <!-- Uploader and Like Buttopn Area -->
+                <div class="row">
+                  <div class="col-lg-8 col-md-12 mb-12">
+                    <h5 class="card-title"><a class="userName" href="#">Max Mustermann</a></h5>
+                    <p class="datetime">23.12.1993 - 23:59 Uhr</p>
+                  </div>
+                  <div class="col-lg-4 col-md-4 mb-2 likeButtonContainer hide">
+                    <button type="button" class="btn btn-secondary flashlight-button likeButton" style="width: 100%;"
+                      onclick="likeImage(this);" onmouseover="changeLikeIconHover(this);" onmouseout="changeLikeIcon(this);">
+                      <i class="far fa-heart"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Image Area -->
+              <img class="card-img-top imageElement" src="http://placehold.it/700x400" alt="">
+
+              <!--  -->
+              <div class="card-body">
+                <h6><b>Gefällt <b class="likeCounter">10</b> Personen</b></h6>
+                <p class="card-text imageDescription">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+                  numquam aspernatur!
+                  Lorem ipsum dolor sit amet.
+                </p>
+              </div>
+
+              <!-- CommentArea and add CommentArea -->
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="padding-bottom:0;">
+                  <div class="row">
+                    <div class="col-10"><p class="card-title"><strong class="commentsCounter">10</strong> Kommentare</p></div>
+                  <div class="col-2 row" style="right: 0;">
+                    <i class="far fa-comment" style="font-size: x-large;" data-toggle="modal" onclick="setCurrentCommentedImageID(this);"
+                    data-target="#commentImageModal"></i>
+                  </div>
+                  </div>
+                </li>
+                <!-- CommentArea -->
+                <li class="commentArea list-group-item">
+                </li>
+              </ul>
+              <div class="card-footer">
+                <small class="text-muted"><a onclick="">Zeige mehr Kommentare</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!--class: commentUsername  -->
+      <!--class: commentText      -->
+      <template id="commentTemplate">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 comment-name"><strong class="commentUsername">Asef Alper Tunga Dündar</strong></div>
+            <div class="col">
+              <p class="commentText">Das hier ist nur ein füllender Kommentar, der nichts zu bedeuten hat!</p>
+            </div>
+          </div>
+        </li>
+      </template>
+
+    </div>
+
+    <!-- User Content Page -->
+    <div id="userImages" class="hide">
+
+
+
+      <!-- Userinfo Bar -->
+      <div id="userinfoBar">
+        <div class="d-flex justify-content-center">
+          <div class="row" style="width:530px; padding:15px;">
+            <div class="col-10">
+              <h5><b id="loggedInNameMyImages">Max Mustermann</b></h5>
+              <p>Hier kannst du deine Bilder anschauen und auch löschen!</p>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-secondary flashlight-button" onclick="openPublicPage();"><i
+                  class="fas fa-arrow-left"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!------ Row Userimage Card Template ------>
+      <!-- ID:    /users/{userID}/{imageID}    -->
+      <!-- ID:    usersImageDummy              -->
+      <!-- Class: usersImageCardDateTime       -->
+      <!-- Class: usersImageCardImage          -->
+      <!-- Class: usersImageCardLikeCounter    -->
+      <!-- Class: usersImageCardCommentCounter -->
+      <template id="usersImageCardRowTemplate">
+        <div class="d-flex justify-content-center userImageCardRow">
+          <div id="/users/{userID}/{imageID}" class="col-lg-2 col-md-6 mb-4 userImageCard">
+            <div class="card h-100">
+              <div class="card-header">
+                <p class="card-title userImageCardDateTime" style="text-align:center;">23.12.1993 - 23:59 Uhr</p>
+              </div>
+              <img class="card-img-top userImageCardImage" src="http://placehold.it/700x400" alt="">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3" style="color: orange;"><i class="fa fa-heart"></i></div>
+                  <div class="col-3"><b class="userImageCardLikeCounter">3</b></div>
+                  <div class="col-3" style="color: orange;"><i class="far fa-thumbs-up"></i></div>
+                  <div class="col-3"><b class="userImageCardCommentCounter">42</b></div>
+                </div>
+              </div>
+              <div class="card-footer card-footer-users">
+                <button class="btn btn-secondary flashlight-button" onclick="var id=setCurrentImageToDeleteID(this); deleteImage(id);"><i class="far fa-trash-alt"></i>Löschen</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4 userImageDummy">
+            <div class="card h-100"></div>
+          </div>
+        </div>
+      </template>
+
+
+
+      <!---- Single Userimage Card Template ----->
+      <!-- ID:    /users/{userID}/{imageID}    -->
+      <!-- Class: usersImageCardDateTime       -->
+      <!-- Class: usersImageCardImage          -->
+      <!-- Class: usersImageCardLikeCounter    -->
+      <!-- Class: usersImageCardCommentCounter -->
+      <template id="userImageCardTemplate">
+        <div id="/users/{userID}/{imageID}" class="col-lg-2 col-md-6 mb-4 userImageCard">
+          <div class="card h-100">
+            <div class="card-header">
+              <p class="card-title userImageCardDateTime" style="text-align:center;">23.12.1993 - 23:59 Uhr</p>
+            </div>
+            <img class="card-img-top userImageCardImage" src="http://placehold.it/700x400" alt="">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-3" style="color: orange;"><i class="fa fa-heart"></i></div>
+                <div class="col-3"><b class="userImageCardLikeCounter">3</b></div>
+                <div class="col-3" style="color: orange;"><i class="far fa-thumbs-up"></i></div>
+                <div class="col-3"><b class="userImageCardCommentCounter">42</b></div>
+              </div>
+            </div>
+            <div class="card-footer card-footer-users">
+              <button class="btn btn-secondary flashlight-button" onclick="deleteImage(setCurrentCommentedImageID(this));"><i class="far fa-trash-alt"></i>Löschen</button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </div>
+
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center">
+            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="loginForm" method="POST" action="/users?action=login">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input name="username" type="text" class="form-control" id="inputName" aria-describedby="emailHelp">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn flashlight-button" value="Login">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal Register ---->
+    <!-- ID: registerModal -->
+    <div id="registerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Registriere dich bei Flashlight</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="registerForm" method="POST" action="/users?action=register">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Dein Alias</label>
+                <input name="username" type="text" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">So sehen dich die anderen bei Flashlight!</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email Adresse</label>
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Deine Daten sind bei uns sicher!</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                <small id="emailHelp" class="form-text text-muted">Folgendes muss dein Password enthalten: *****</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword2">Wiederhole dein Password</label>
+                <input name="repeatpassword" type="password" class="form-control" id="exampleInputPassword2">
+              </div>
+              <div class="form-group form-check">
+                <input name="checkagb" type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Akzeptiere die nicht vorhandnen AGB's</label>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn flashlight-button" value="Login">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!--------- Modal Add Image ----------->
+    <!-- ID: addImageModal               -->
+    <!-- ID: uploadImageForm             -->
+    <!-- ID: uploadImageFormFile         -->
+    <!-- ID: uploadImageFormDescription  -->
+    <!-- ID: uploadImageFormUploadButton -->
+    <div id="addImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Lade ein Foto auf Flashlight hoch!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="uploadImageForm" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+              <div class="container">
+                <div class="form-group">
+                  <label for="uploadImageFormFile">Wähle eine BIlddatei aus!</label>
+                  <input id="uploadImageFormFile" type="file" name="uploadfile" accept="image/*">
+                </div>
+                <div class="form-group">
+                  <label for="uploadImageFormDescription">Beschreibung</label>
+                  <textarea id="uploadImageFormDescription" type="text" name="description" class="form-control"
+                    rows="3"></textarea>
+                  <small>Maximal 150 Buchstaben</small>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn flashlight-button" value="Lade Foto hoch!">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!--------- Modal Add Image ----------->
+    <!-- ID: addImageModal               -->
+    <!-- ID: uploadImageForm             -->
+    <!-- ID: uploadImageFormFile         -->
+    <!-- ID: uploadImageFormDescription  -->
+    <!-- ID: uploadImageFormUploadButton -->
+    <div id="commentImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              Bild Kommentieren
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="commentImageForm" method="POST">
+            <div class="modal-body">
+              <div class="container">
+                <div class="form-group">
+                  <label for="uploadImageFormDescription">Kommentar</label>
+                  <textarea id="comment" type="text" name="comment" class="form-control"
+                    rows="5"></textarea>
+                  <small>Maximal 150 Buchstaben und achte auf die nicht vorhandenen Community-Regeln!</small>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn flashlight-button" value="Lade Foto hoch!">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Fullscreen Loading -->
+    <!-- ID: loadingscreen   -->
+    <div id="loadingscreen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content loadingScreenModalContent" style="width: 250px;">
+          <div class="modal-header">
+            <div class="d-flex justify-content-center">
+              <h5> <i>Lädt... bitte warten</i></h5>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+  </footer>
+
+  <scripts>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script src="https://kit.fontawesome.com/1bdfcdf268.js" crossorigin="anonymous"></script>
+  </scripts>
+
+</body>
+
+</html>
+{{end}}

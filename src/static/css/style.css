@@ -1,0 +1,70 @@
+main {
+    padding-top: 80px;
+}
+
+.navbar {
+    background-color: orange;
+}
+
+.modal {
+    top: -50px;
+}
+
+body {
+    font-size: small;
+}
+
+.flashlight-button {
+    background-color: orange;
+    border-color: orange;
+}
+
+.flashlight-button:hover {
+    background-color: white;
+    border-color: white;
+    color: orange;
+}
+
+.flashlight-button:focus {
+    background-color: orange;
+    border-color: orange;
+}
+
+.hide {
+    display: none;
+}
+
+.card-footer-users {
+    text-align: center;
+}
+
+.comment-name {
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.upload-drop-zone.drop {
+    color: #222;
+    border-color: #222;
+}
+
+#notLoggedBar{
+    padding: 20px;
+}
+
+#loggedBar{
+    padding: 20px;
+}
+
+.loadingScreenModalContent{
+    margin: 110px;
+}
+
+.likedButton {
+    color: red;
+    background: white;
+    border: aliceblue;
+}
+
