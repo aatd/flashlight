@@ -1,7 +1,7 @@
 /*
  * Flashlight - By Asef Alper Tunga Dündar
  *
- * This Appication is something like Instagram for the University of Applied Sciences
+ * This Appication is something like Instagram implemented for the Cologne University of Applied Sciences
  *
  * API version: 1.0.0
  */
