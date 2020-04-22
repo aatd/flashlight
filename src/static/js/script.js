@@ -1084,7 +1084,7 @@ function addUserImageCard(jsonObject){
         imageElement.src         = `../images/${jsonObject._id}/raw`;
         likeCounter.innerHTML    = jsonObject.likes || 0;
         commentCounter.innerHTML = jsonObject.comments || 0;
-        imageUpload.innerHTML    = new Date(jsonObject.uploadtime).toTimeString();
+        imageUpload.innerHTML    = new Date(jsonObject.uploadtime).toLocaleString();
 
         //Append written Object
         dummyCard.parentElement.replaceChild(tempclone,dummyCard);
@@ -1108,7 +1108,7 @@ function addUserImageCard(jsonObject){
         imageCard.id             = `userImage_${jsonObject._id}`;
         likeCounter.innerHTML    = jsonObject.likes || 0;
         commentCounter.innerHTML = jsonObject.comments || 0;
-        imageUpload.innerHTML    = new Date(jsonObject.uploadtime).toTimeString();
+        imageUpload.innerHTML    = new Date(jsonObject.uploadtime).toLocaleString();
 
         //Appen written Object
         userImages.appendChild(tempclone);
@@ -1170,7 +1170,7 @@ function addImageCard(jsonObject) {
     likeCounter.innerHTML      = responseJSON.ImageMetaData.likes || 0;
     imageDescription.innerHTML = responseJSON.ImageMetaData.description;
     userName.innerHTML         = responseJSON.ImageMetaData.owner;
-    datetime.innerHTML         = new Date(responseJSON.ImageMetaData.uploadtime).toTimeString()
+    datetime.innerHTML         = new Date(responseJSON.ImageMetaData.uploadtime).toLocaleString()
     commentsCounter.innerHTML  = 0;
 
     if(responseJSON.Comments !== null) {

@@ -49,7 +49,7 @@ func FlushTempFiles() {
 
 	tempDir := workingDir + "/temp"
 	if runtime.GOOS == "windows" {
-		tempDir = "\\temp"
+		tempDir = workingDir + "\\temp"
 	}
 	allFilenames, _ := filePathWalkDir(tempDir)
 	for i := 0; i < len(allFilenames); i++ {

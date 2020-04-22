@@ -65,9 +65,9 @@ func UploadImage(w http.ResponseWriter, r *http.Request) {
 
 	//Create Temp File
 	workingDir, _ := os.Getwd()
-	tempDir := "/temp"
+	tempDir := workingDir + "/temp"
 	if runtime.GOOS == "windows" {
-		tempDir = "\\temp"
+		tempDir = workingDir + "\\temp"
 	}
 
 	tempFile, err := ioutil.TempFile(tempDir, "upload-*.png")
