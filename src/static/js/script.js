@@ -81,7 +81,6 @@ function register(event) {
     try {
 
         //Get Formdata
-        toggleLoadingScreen();
         event.preventDefault();
         var formdata = event.target;
 
@@ -98,8 +97,7 @@ function register(event) {
 
                 getUserdata();
                 setupLoggedPage();
-                toggleLoadingScreen();
-                dissmissAllModals();
+                setTimeout(function(){dissmissAllModals()}, 1000);
 
             }
             if(response.status === 409) {
@@ -116,13 +114,11 @@ function register(event) {
                 }
 
                 alert(messages);
-                setTimeout(function(){dissmissAllModals()}, 1000);
 
             }
             if(response.status === 500) {
 
                 alert("Something Made wrong: Message under Construction ;)")
-                dissmissAllModals();
 
             }
 
@@ -130,13 +126,12 @@ function register(event) {
         var error   = function(response) {
 
             alert("Something Made wrong: Message under Construction ;)")
-            dissmissAllModals();
+            
         }
 
     } catch {
 
         alert("Something Made wrong: Message under Construction ;)")
-        dissmissAllModals();
 
     }
 
@@ -712,6 +707,12 @@ function getLike(imageID) {
 
             }
 
+            else if(response.status === 401) {
+
+                //Do nothing because it is good that nothing happens when not logged in
+
+            }
+
             else {
 
                 alert("Something Made wrong: Message under Construction ;)")
@@ -734,6 +735,7 @@ function getLike(imageID) {
 
     }
 }
+
 
 /**
  * 

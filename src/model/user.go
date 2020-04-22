@@ -44,8 +44,8 @@ func (user User) CreateUser() (err error) {
 	}
 
 	// Check wether username already exists
-	userInDBByEmail, err := GetUserByEmail(user.Name)
-	if err == nil && userInDBByEmail.Name == user.Name {
+	userInDBByEmail, err := GetUserByEmail(user.Email)
+	if err == nil && userInDBByEmail.Email == user.Email {
 		return errors.New("Emailadresse bereits vergeben.")
 	}
 
@@ -93,7 +93,7 @@ func GetUserByUsername(username string) (user User, err error) {
 	query := fmt.Sprintf(`{"selector": {"type": "User","name":"%s"}}`, username)
 	u, err := DB.QueryJSON(query)
 	if err != nil || len(u) != 1 {
-		return User{}, err
+		return User{}, errors.New("Benutzername existiert nicht.")
 	}
 
 	// Convert to Golang Map
