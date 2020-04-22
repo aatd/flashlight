@@ -15,6 +15,7 @@ import (
 	"model"
 	"net/http"
 	"os"
+	"runtime"
 	"strconv"
 	"utils"
 
@@ -64,7 +65,12 @@ func UploadImage(w http.ResponseWriter, r *http.Request) {
 
 	//Create Temp File
 	workingDir, _ := os.Getwd()
-	tempFile, err := ioutil.TempFile(workingDir+"\\temp", "upload-*.png")
+	tempDir := "/temp"
+	if runtime.GOOS == "windows" {
+		tempDir = "\\temp"
+	}
+
+	tempFile, err := ioutil.TempFile(tempDir, "upload-*.png")
 	if err != nil {
 
 		w.WriteHeader(http.StatusInternalServerError)

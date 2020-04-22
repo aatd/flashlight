@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          Sessionmanagment                                        //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-/** Done
+/**
  * 
  * @param {Event} event
  */
@@ -30,16 +30,27 @@ function login(event) {
                 dissmissAllModals();
 
             }
-            if(response.status === 404) {
+            if(response.status === 409) {
 
-                alert("Something Made wrong: Message under Construction ;)")
-                dissmissAllModals();
+                var messages = "";
+
+                jsonMessages = JSON.parse(response.responseText).Messages;
+
+                for (let index = 0; index < jsonMessages.length; index++) {
+                    const element = jsonMessages[index];
+
+                    messages += element +"\n";
+
+                }
+
+                alert(messages);
+                setTimeout(function(){dissmissAllModals()}, 1000);
 
             }
             if(response.status === 500) {
 
                 alert("Something Made wrong: Message under Construction ;)")
-                dissmissAllModals();
+                setTimeout(function(){dissmissAllModals()}, 1000);
 
             }
 
@@ -61,7 +72,7 @@ function login(event) {
 }document.getElementById("loginForm").addEventListener('submit', function(ev){login(ev);})
 
 
-/** Done
+/**
  * 
  * @param {Event} event 
  */
@@ -91,10 +102,21 @@ function register(event) {
                 dissmissAllModals();
 
             }
-            if(response.status === 405) {
+            if(response.status === 409) {
 
-                alert("Something Made wrong: Message under Construction ;)")
-                dissmissAllModals();
+                var messages = "";
+
+                jsonMessages = JSON.parse(response.responseText).Messages;
+
+                for (let index = 0; index < jsonMessages.length; index++) {
+                    const element = jsonMessages[index];
+
+                    messages += element +"\n";
+
+                }
+
+                alert(messages);
+                setTimeout(function(){dissmissAllModals()}, 1000);
 
             }
             if(response.status === 500) {
@@ -121,7 +143,7 @@ function register(event) {
 }document.getElementById("registerForm").addEventListener('submit', function(ev){register(ev);})
 
 
-/** Done
+/**
  * 
  * @param {HTMLFormElement} formdata 
  */
@@ -164,7 +186,7 @@ function logout(event) {
 }document.getElementById("logoutForm").addEventListener('submit', function(ev){logout(ev);})
 
 
-/** Done
+/**
  * 
  */
 function getUserdata() {
@@ -232,7 +254,7 @@ function getUserdata() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Serverside Communication                                    //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-/** Done
+/**
  * 
  * @param {Event} event 
  */
@@ -261,8 +283,7 @@ function uploadImage(event) {
 
             if(response.status===201) {
 
-                //addUserImageCard();
-                window.setTimeout(function(){dissmissAllModals();}, 1000);
+                location.reload(); 
 
             } 
 
@@ -291,7 +312,7 @@ function uploadImage(event) {
         var error   = function(response) {
 
             alert("Something Made wrong: Message under Construction ;)")
-            dissmissAllModals();
+            window.setTimeout(function(){dissmissAllModals();}, 1000);
 
         };   
 
@@ -308,7 +329,7 @@ function uploadImage(event) {
 }document.getElementById("uploadImageForm").addEventListener('submit', function(ev){uploadImage(ev);})
 
 
-/** Done
+/**
  * 
  * @param {Event} event 
  */
@@ -367,7 +388,7 @@ function commentImage(event) {
 }document.getElementById("commentImageForm").addEventListener('submit', function(ev){commentImage(ev);})
 
 
-/** Done
+/**
  * 
  * @param {string} imageID 
  */
@@ -421,7 +442,7 @@ function getComments(imageID) {
 }
 
 
-/** Done
+/**
  * 
  * @param {string} imageID 
  */
@@ -478,22 +499,13 @@ function getImageCard(imageID) {
 }
 
 
-/** Done
+/**
  * 
  * @param {number} recordTime 
  */
 function getImageCards(recordTime) {
 
     try{
-
-        //XHR
-        var method = "GET";
-        var action = `/images?lastRecordTime=${recordTime}`;
-        var xhr = new XMLHttpRequest();
-        xhr.onload  = function(){ success(xhr); } // success case
-        xhr.onerror = function(){   error(xhr); } // failure case
-        xhr.open (method, action, true);
-        xhr.send ();
 
         var success = function(response) {
 
@@ -523,6 +535,14 @@ function getImageCards(recordTime) {
 
         };
 
+        //XHR
+        var method = "GET";
+        var action = `/images?lastRecordTime=${recordTime}`;
+        var xhr = new XMLHttpRequest();
+        xhr.onload  = function(){ success(xhr); } // success case
+        xhr.onerror = function(){   error(xhr); } // failure case
+        xhr.open (method, action, false);
+        xhr.send ();
 
     } catch {
 
@@ -534,7 +554,7 @@ function getImageCards(recordTime) {
 }
 
 
-/** Done
+/**
  * 
  * @param {HTMLElement} cardElement 
  */
@@ -604,7 +624,7 @@ function likeImage(likeButton) {
 }
 
 
-/** Done
+/**
  * 
  * @param {number} imageID 
  */
@@ -658,7 +678,7 @@ function getLikes(imageID) {
 }
 
 
-/** Done
+/**
  * 
  * @param {string} imageID 
  */
@@ -715,21 +735,12 @@ function getLike(imageID) {
     }
 }
 
-/** Done
+/**
  * 
  */
 function getUserImages() {
 
     try{
-
-        //XHR
-        var method = "GET";
-        var action = `/users/${applicationState.userID}/images`;
-        var xhr = new XMLHttpRequest();
-        xhr.onload  = function(){ success(xhr); } // success case
-        xhr.onerror = function(){   error(xhr); } // failure case
-        xhr.open (method, action, true);
-        xhr.send ();
 
         var success = function(response) {
 
@@ -759,6 +770,15 @@ function getUserImages() {
 
         };
 
+        //XHR
+        var method = "GET";
+        var action = `/users/${applicationState.userID}/images`;
+        var xhr = new XMLHttpRequest();
+        xhr.onload  = function(){ success(xhr); } // success case
+        xhr.onerror = function(){   error(xhr); } // failure case
+        xhr.open (method, action, false);
+        xhr.send ();
+
 
     } catch {
 
@@ -769,7 +789,7 @@ function getUserImages() {
 
 }
 
-/** Done
+/**
  * 
  * @param {string} imageID 
  */
@@ -826,26 +846,8 @@ function deleteImage(imageID) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            UI Changer                                            //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
- * 
- */
-function toggleLoadingScreen(){
 
-    $('#loadingscreen').modal('toggle');
-
-}
-
-
-/**
- * 
- */
-function unshowLoadingScreen() {
-
-    $('#loadingscreen').modal({show:false});
-
-}
-
-
+//Pages
 /**
  * 
  */
@@ -874,6 +876,7 @@ function openPublicPage(){
 }
 
 
+// Like Changer
 /**
  * 
  * @param {HTMLButtonElement} buttonElement 
@@ -917,6 +920,7 @@ function changeLikeButtonNotLiked(imageID) {
     likeButton.classList.remove("likedButton")
 }
 
+
 /**
  * 
  */
@@ -932,6 +936,7 @@ function showUnshowAllLikeButton(){
 
 }
 
+
 /**
  * 
  * @param {string} imageID 
@@ -946,6 +951,7 @@ function updateLikes(imageID, likes) {
 }
 
 
+//Comments
 /**
  * 
  * @param {string} imageID 
@@ -955,6 +961,7 @@ function showAllComments(imageID) {
     //TODO
 
 }
+
 
 /**
  * 
@@ -995,6 +1002,7 @@ function insertAllComments(imageID, jsonObject){
     }
 }
 
+
 /**
  * 
  * @param {string} imageID 
@@ -1023,6 +1031,8 @@ function setCurrentCommentedImageID(htmlElement) {
     }
 }
 
+
+//Images
 /**
  * 
  * @param {HTMLElement} htmlElement 
@@ -1037,132 +1047,12 @@ function setCurrentImageToDeleteID(htmlElement) {
     }
 }
 
+
 /**
  * 
  */
 function loadUserImages() {
     //TODO
-}
-
-
-/**
- * 
- */
-function setupLoggedPage() {
-
-    //Change Url
-    window.history.pushState(null, `${applicationState.userName} - Flashlight`, "/users/" + applicationState.userID);
-
-    //Get Elements
-    imageCardTemplateClone  = imageCardTemplate.content.cloneNode(true).children[0];
-    var likeButtonContainer = imageCardTemplateClone.getElementsByClassName("likeButtonContainer")[0];
-
-    //ChangeUI Template
-    likeButtonContainer.classList.remove("hide");
-    headerLoggedIn.classList.remove("hide");
-    headerLoggedOut.classList.add("hide");
-
-    //Activate all LikeButton from all Loadedimages
-    for (let index = 2; index < publicImages.children.length-2; index++) {     
-        const imageCard = publicImages.children[index];
-        var likeButton  = imageCard.getElementsByClassName("likeButtonContainer")[0];
-        likeButton.classList.remove("hide");
-    }
-}
-
-
-/**
- * 
- */
-function setupLoggedOutPage() {
-
-    //Change Url
-    window.history.pushState(null, "Flashlight - By Asef Alper Tunga Dündar", "/");
-
-    //Get all Elements
-    var imageCardTemplateClone = imageCardTemplate.content.cloneNode(true).children[0];
-    var likeButtonTemplate     = imageCardTemplateClone.getElementsByClassName("likeButtonContainer")[0];
-    var commentAreaTemplate    = imageCardTemplateClone.getElementsByClassName("userCommentArea")[0];
-    var likeButtons            = publicImages.getElementsByClassName('likeButtonContainer');
-    var commentAreas           = publicImages.getElementsByClassName('userCommentArea');
-
-    //ChangeUI Template
-    headerLoggedIn.classList.add("hide");
-    headerLoggedOut.classList.remove("hide");
-    likeButtonTemplate.classList.add("hide");
-    commentAreaTemplate.classList.add("hide");
-
-    //Deavtivate all LikeButton from all Loadedimages
-    for (let index = 0; index < likeButtons.length; index++) {     
-        const likeButton = likeButtons[index];
-        likeButton.classList.add("hide");
-    }
-
-    //Deavtivate all Commentareas from all Loadedimages
-    for (let index = 0; index < commentAreas.length; index++) {     
-        const commentArea = commentAreas[index];
-        commentArea.classList.add("hide");
-    }
-
-}
-
-
-/**
- * 
- * @param {string} jsonText 
- */
-function setupUserdata(jsonText) {
-
-    var jsonParsed = JSON.parse(jsonText);
-    applicationState.userID   = jsonParsed.HashedUsername;
-    applicationState.username = jsonParsed.Username;
-    applicationState.loggedIn = true;
-
-    loggedInName.innerHTML = applicationState.username;
-    loggedInNameMyImages.innerHTML = applicationState.userName;
-
-    getUserImages();
-    
-}
-
-
-/**
- * 
- */
-function initRecordTimes() {
-
-    applicationState.lastimageDateTime  = Date.now();
-    applicationState.firstImageDataTime = Date.now();
-
-}
-
-
-/**
- * 
- */
-function unsetUserdata() {
-
-    applicationState.userID = "";
-    applicationState.userName = "";
-    applicationState.userimagesCount = 0;
-
-    document.getElementById("loggedInName").innerHTML = "";
-    document.getElementById("loggedInNameMyImages").innerHTML = "";
-
-}
-
-
-/**
- * 
- */
-function dissmissAllModals() {
-
-    var modals = document.getElementsByClassName("modal");
-    for (let index = 0; index < modals.length; index++) {
-        const modalElement = modals[index];
-        $('#'+modalElement.id).modal('hide');
-    }
-
 }
 
 
@@ -1332,6 +1222,161 @@ function getImageCardID(htmlElement) {
 }
 
 
+//Sessionmanagement
+/**
+ * 
+ */
+function setupLoggedPage() {
+
+    //Change Url
+    window.history.pushState(null, `${applicationState.userName} - Flashlight`, "/users/" + applicationState.userID);
+
+    //Get Elements
+    likeButtons    = publicImages.getElementsByClassName("likeButtonContainer"); 
+    commentAreas   = publicImages.getElementsByClassName("commenArea");
+    commentButtons = publicImages.getElementsByClassName("commentButton");
+
+    //ChangeUI Template
+    headerLoggedIn.classList.remove("hide");
+    headerLoggedOut.classList.add("hide");
+
+    //Activate all LikeButton from all Loadedimages
+    for (let index = 0; index < likeButtons.length; index++) {     
+        const likeButton = likeButtons[index];
+        likeButton.classList.remove("hide");
+    }
+
+    //Activate all Comments from all Loadedimages
+    for (let index = 0; index < commentAreas.length; index++) {
+        const commentArea = commentAreas[index];
+        commentArea.classList.remove("hide");
+    }
+
+    //Activate all Commentbuttons from all Loadedimages
+    for (let index = 0; index < commentButtons.length; index++) {
+        const commentButton = commentButtons[index];
+        commentButton.classList.remove("hide");
+    }
+}
+
+
+/**
+ * 
+ */
+function setupLoggedOutPage() {
+
+    //Change Url
+    window.history.pushState(null, "Flashlight - By Asef Alper Tunga Dündar", "/");
+
+    //Get all Elements
+    likeButtons    = publicImages.getElementsByClassName("likeButtonContainer"); 
+    commentAreas   = publicImages.getElementsByClassName("commenArea");
+    commentButtons = publicImages.getElementsByClassName("commentButton");
+
+    //ChangeUI Template
+    headerLoggedIn.classList.add("hide");
+    headerLoggedOut.classList.remove("hide");
+
+    //Deavtivate all LikeButton from all Loadedimages
+    for (let index = 0; index < likeButtons.length; index++) {     
+        const likeButton = likeButtons[index];
+        likeButton.classList.add("hide");
+    }
+
+    //Deavtivate all Commentareas from all Loadedimages
+    for (let index = 0; index < commentAreas.length; index++) {     
+        const commentArea = commentAreas[index];
+        commentArea.classList.add("hide");
+    }
+
+    //Deactivate all Commentbuttons from all Loadedimages
+    for (let index = 0; index < commentButtons.length; index++) {
+        const commentButton = commentButtons[index];
+        commentButton.classList.add("hide");
+    }
+
+}
+
+
+/**
+ * 
+ * @param {string} jsonText 
+ */
+function setupUserdata(jsonText) {
+
+    var jsonParsed = JSON.parse(jsonText);
+    applicationState.userID   = jsonParsed.HashedUsername;
+    applicationState.username = jsonParsed.Username;
+    applicationState.loggedIn = true;
+
+    loggedInName.innerHTML = applicationState.username;
+    loggedInNameMyImages.innerHTML = applicationState.userName;
+
+    getUserImages();
+    
+}
+
+
+/**
+ * 
+ */
+function initRecordTimes() {
+
+    applicationState.lastimageDateTime  = Date.now();
+    applicationState.firstImageDataTime = Date.now();
+
+}
+
+
+/**
+ * 
+ */
+function unsetUserdata() {
+
+    applicationState.userID          = "";
+    applicationState.userName        = "";
+    applicationState.userimagesCount = 0;
+
+    document.getElementById("loggedInName").innerHTML         = "";
+    document.getElementById("loggedInNameMyImages").innerHTML = "";
+
+}
+
+//Modals
+/**
+ * 
+ */
+function dissmissAllModals() {
+
+    var modals = document.getElementsByClassName("modal");
+    for (let index = 0; index < modals.length; index++) {
+        const modalElement = modals[index];
+        $('#'+modalElement.id).modal('hide');
+    }
+
+}
+
+
+/**
+ * 
+ */
+function toggleLoadingScreen(){
+
+    $('#loadingscreen').modal('toggle');
+
+}
+
+
+/**
+ * 
+ */
+function unshowLoadingScreen() {
+
+    $('#loadingscreen').modal({show:false});
+
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                               Setup                                              //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1358,7 +1403,7 @@ var loggedInName              = document.getElementById(       "loggedInName"   
 var loggedInNameMyImages      = document.getElementById(   "loggedInNameMyImages"  );
 var imageCardTemplate         = document.getElementById(     "imageCardTemplate"   );
 var commentTemplate           = document.getElementById(      "commentTemplate"    );
-var userImageCardRowTemplate = document.getElementById("usersImageCardRowTemplate");
+var userImageCardRowTemplate  = document.getElementById("usersImageCardRowTemplate");
 var userImageCardTemplate     = document.getElementById(  "userImageCardTemplate"  );
 
 window.onload   = function() {
@@ -1376,7 +1421,7 @@ window.onload   = function() {
 };
 
 window.onscroll = function() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight-100 && publicImages.children.length < 11) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && publicImages.children.length < 100) {
         getImageCards(applicationState.lastimageDateTime);
     }
 };

@@ -90,6 +90,8 @@
       <!--class: likeButtonContainer -->
       <!--class: userName            -->
       <!--class: commentsCounter     -->
+      <!--class: commentArea         -->
+      <!--class: commentButton       -->
       <template id="imageCardTemplate">
         <div class="d-flex justify-content-center">
           <div class="col-lg-4 col-md-6 mb-4">
@@ -116,11 +118,8 @@
 
               <!--  -->
               <div class="card-body">
-                <h6><b>Gefällt <b class="likeCounter">10</b> Personen</b></h6>
+                <h6><b>Gefällt <b class="likeCounter">0</b> Personen</b></h6>
                 <p class="card-text imageDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
-                  numquam aspernatur!
-                  Lorem ipsum dolor sit amet.
                 </p>
               </div>
 
@@ -128,8 +127,8 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item" style="padding-bottom:0;">
                   <div class="row">
-                    <div class="col-10"><p class="card-title"><strong class="commentsCounter">10</strong> Kommentare</p></div>
-                  <div class="col-2 row" style="right: 0;">
+                    <div class="col-10"><p class="card-title"><strong class="commentsCounter">0</strong> Kommentar/e</p></div>
+                  <div class="col-2 row commentButton" style="right: 0;">
                     <i class="far fa-comment" style="font-size: x-large;" data-toggle="modal" onclick="setCurrentCommentedImageID(this);"
                     data-target="#commentImageModal"></i>
                   </div>
@@ -400,12 +399,12 @@
                   <label for="uploadImageFormDescription">Kommentar</label>
                   <textarea id="comment" type="text" name="comment" class="form-control"
                     rows="5"></textarea>
-                  <small>Maximal 150 Buchstaben und achte auf die nicht vorhandenen Community-Regeln!</small>
+                  <small>Achte auf die nicht vorhandenen Community-Regeln!</small>
                 </div>
               </div>
             </div>
             <div class="modal-footer justify-content-center">
-              <input type="submit" class="btn flashlight-button" value="Lade Foto hoch!">
+              <input type="submit" class="btn flashlight-button" value="Kommentiere">
             </div>
           </form>
         </div>

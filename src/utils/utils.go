@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 	"time"
 
 	"github.com/gorilla/sessions"
@@ -45,7 +46,11 @@ func LoggerCookie(session *sessions.Session) {
 func FlushTempFiles() {
 
 	workingDir, _ := os.Getwd()
-	tempDir := workingDir + "\\temp"
+
+	tempDir := workingDir + "/temp"
+	if runtime.GOOS == "windows" {
+		tempDir = "\\temp"
+	}
 	allFilenames, _ := filePathWalkDir(tempDir)
 	for i := 0; i < len(allFilenames); i++ {
 		os.Remove(allFilenames[i])
