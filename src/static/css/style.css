@@ -27,8 +27,10 @@ body {
 }
 
 .flashlight-button:focus {
-    background-color: orange;
-    border-color: orange;
+    outline: none;
+    background-color: white;
+    border-color: white;
+    color: red;
 }
 
 .hide {
@@ -41,7 +43,6 @@ body {
 
 .comment-name {
     text-overflow: ellipsis;
-
     white-space: nowrap;
     overflow: hidden;
 }

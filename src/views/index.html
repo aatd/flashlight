@@ -34,11 +34,11 @@
         <div class="d-flex justify-content-center btn-group" role="group">
 
             <!-- Login Button - Open up the Login Modal Form -->
-            <button type="button" class="btn btn-secondary flashlight-button" data-toggle="modal"
+            <button type="button" class="btn flashlight-button" data-toggle="modal"
               data-target="#loginModal">Login</button>
 
             <!-- Register Button - Open up the Register Modal Form -->
-            <button type="button" class="btn btn-secondary flashlight-button" data-toggle="modal"
+            <button type="button" class="btn flashlight-button" data-toggle="modal"
               data-target="#registerModal">Register</button>
 
         </div>
@@ -65,11 +65,11 @@
 
             <!-- My Images Button Area -->
             <div class="col-4">
-              <button id="myImagesButton" class="btn btn-secondary flashlight-button" onclick="openMyImagesPage()">Meine
+              <button id="myImagesButton" class="btn flashlight-button" onclick="openMyImagesPage()">Meine
                 Bilder</button></div>
 
             <div class="col-2">
-              <button id="addImageButton" class="btn btn-secondary flashlight-button" data-toggle="modal"
+              <button id="addImageButton" class="btn flashlight-button" data-toggle="modal"
                 data-target="#addImageModal"><i class="fas fa-plus"></i></button>
             </div>
 
@@ -105,7 +105,7 @@
                     <p class="datetime">23.12.1993 - 23:59 Uhr</p>
                   </div>
                   <div class="col-lg-4 col-md-4 mb-2 likeButtonContainer hide">
-                    <button type="button" class="btn btn-secondary flashlight-button likeButton" style="width: 100%;"
+                    <button type="button" class="btn flashlight-button likeButton" style="width: 100%;"
                       onclick="likeImage(this);" onmouseover="changeLikeIconHover(this);" onmouseout="changeLikeIcon(this);">
                       <i class="far fa-heart"></i>
                     </button>
@@ -150,8 +150,8 @@
       <!--class: commentText      -->
       <template id="commentTemplate">
         <li class="list-group-item">
-          <div class="row">
-            <div class="col-2 comment-name"><strong class="commentUsername">Asef Alper Tunga Dündar</strong></div>
+          <div class="">
+            <div class="comment-name"><strong class="commentUsername">Asef Alper Tunga Dündar</strong></div>
             <div class="col">
               <p class="commentText">Das hier ist nur ein füllender Kommentar, der nichts zu bedeuten hat!</p>
             </div>
@@ -175,7 +175,7 @@
               <p>Hier kannst du deine Bilder anschauen und auch löschen!</p>
             </div>
             <div class="col-2">
-              <button class="btn btn-secondary flashlight-button" onclick="openPublicPage();"><i
+              <button class="btn flashlight-button" onclick="openPublicPage();"><i
                   class="fas fa-arrow-left"></i></button>
             </div>
           </div>
@@ -208,7 +208,7 @@
                 </div>
               </div>
               <div class="card-footer card-footer-users">
-                <button class="btn btn-secondary flashlight-button" onclick="var id=setCurrentImageToDeleteID(this); deleteImage(id);"><i class="far fa-trash-alt"></i>Löschen</button>
+                <button class="btn flashlight-button" onclick="var id=setCurrentImageToDeleteID(this); deleteImage(id);"><i class="far fa-trash-alt"></i>Löschen</button>
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@
               </div>
             </div>
             <div class="card-footer card-footer-users">
-              <button class="btn btn-secondary flashlight-button" onclick="deleteImage(setCurrentCommentedImageID(this));"><i class="far fa-trash-alt"></i>Löschen</button>
+              <button class="btn flashlight-button" onclick="deleteImage(setCurrentCommentedImageID(this));"><i class="far fa-trash-alt"></i>Löschen</button>
             </div>
           </div>
         </div>

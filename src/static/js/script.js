@@ -28,6 +28,7 @@ function login(event) {
                 getUserdata();
                 setupLoggedPage();
                 dissmissAllModals();
+                updateLikesStatus();
 
             }
             if(response.status === 409) {
@@ -459,8 +460,9 @@ function getImageCard(imageID) {
 
                 var jsonObject = JSON.parse(response.responseText);
                 addImageCard(response.responseText);
-                getLike(jsonObject.ImageMetaData._id)
+                getLike(jsonObject.ImageMetaData._id);
                 showUnshowAllLikeButton();
+                showUnshowAllCommentButtons();
 
             }
             if(response.status === 404) {
@@ -749,6 +751,7 @@ function getUserImages() {
             if(response.status === 200) {
 
                 var images = JSON.parse(response.responseText).Images;
+                if(!images) return;
 
                 for (let index = 0; index < images.length; index++) {
 
@@ -885,7 +888,7 @@ function openPublicPage(){
  */
 function changeLikeIcon(buttonElement) {
 
-    buttonElement.children[0].classList = "far fa-heart";
+    buttonElement.children[0].classList = "fa fa-heart";
 
 }
 
@@ -896,7 +899,7 @@ function changeLikeIcon(buttonElement) {
  */
 function changeLikeIconHover(buttonElement) {
 
-    buttonElement.children[0].classList = "fa fa-heart";
+    buttonElement.children[0].classList = "far fa-heart";
 
 }
 
@@ -950,6 +953,16 @@ function updateLikes(imageID, likes) {
     var likeCounter = imageCard.getElementsByClassName("likeCounter")[0];
     likeCounter.innerHTML = likes || 0;
 
+}
+
+function updateLikesStatus(){
+    var loadedImages = publicImages.getElementsByClassName("likeButton");
+
+    for (let index = 0; index < loadedImages.length; index++) {
+        const image = loadedImages[index];
+        const imageID = getImageCardID(image);
+        getLike(imageID);
+    }
 }
 
 
@@ -1031,6 +1044,20 @@ function setCurrentCommentedImageID(htmlElement) {
         if(p.id.includes("image_"))
             applicationState.currentCommentedImageID = imageID = p.id.substring(6, p.length);//The first 6 chars are "image_" the rest is the id
     }
+}
+
+function showUnshowAllCommentButtons(){
+    var commentButtons = publicImages.getElementsByClassName("commentButton"); 
+
+    for (let index = 0; index < commentButtons.length; index++) {
+        const commentButton = commentButtons[index];
+        if(applicationState.loggedIn) {
+            commentButton.classList.remove("hide");
+        } else {
+            commentButton.classList.add("hide");
+        }
+    }
+
 }
 
 
@@ -1235,7 +1262,7 @@ function setupLoggedPage() {
 
     //Get Elements
     likeButtons    = publicImages.getElementsByClassName("likeButtonContainer"); 
-    commentAreas   = publicImages.getElementsByClassName("commenArea");
+    commentAreas   = publicImages.getElementsByClassName("commentArea");
     commentButtons = publicImages.getElementsByClassName("commentButton");
 
     //ChangeUI Template
@@ -1296,6 +1323,8 @@ function setupLoggedOutPage() {
         const commentButton = commentButtons[index];
         commentButton.classList.add("hide");
     }
+
+    removeAllUserImageCards();
 
 }
 
@@ -1409,16 +1438,14 @@ var userImageCardRowTemplate  = document.getElementById("usersImageCardRowTempla
 var userImageCardTemplate     = document.getElementById(  "userImageCardTemplate"  );
 
 window.onload   = function() {
-
     
     initRecordTimes();
+    getImageCards(applicationState.lastimageDateTime);
 
-    getUserdata()
+    getUserdata();
     if(applicationState.loggedIn){
         setupLoggedPage();
     } 
-
-    getImageCards(applicationState.lastimageDateTime);
 
 };
 
