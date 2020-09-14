@@ -18,6 +18,7 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
+// Like
 type Like struct {
 	ID      string `json:"_id"`
 	Rev     string `json:"_rev"`
@@ -30,7 +31,7 @@ type Like struct {
 //							Methods									//
 //////////////////////////////////////////////////////////////////////
 
-// CreateLike    Done
+// CreateLike
 func (user User) CreateLike(imageID string) (err error) {
 
 	//Create Like Model
@@ -49,7 +50,7 @@ func (user User) CreateLike(imageID string) (err error) {
 
 }
 
-// GetLike       Done
+// GetLike
 func (user User) GetLike(imageID string) (liked bool, likeID string, err error) {
 
 	//init
@@ -89,7 +90,7 @@ func (user User) GetLike(imageID string) (liked bool, likeID string, err error) 
 
 }
 
-// GetLikeCounts Done
+// GetLikeCounts
 func (image Image) GetLikeCounts() (amount int, err error) {
 
 	//Query for DB
@@ -117,7 +118,7 @@ func (image Image) GetLikeCounts() (amount int, err error) {
 	return amount, err
 }
 
-// DeleteLike    Done
+// DeleteLike
 func DeleteLike(likeID string) (err error) {
 
 	err = DB.Delete(likeID)

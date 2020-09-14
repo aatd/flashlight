@@ -32,7 +32,7 @@ type Comment struct {
 //							Methods									//
 //////////////////////////////////////////////////////////////////////
 
-// GetComments   Done
+// GetComments
 func (image Image) GetComments() (comments []Comment, err error) {
 
 	//Query for getting all Comments of an Image
@@ -62,7 +62,7 @@ func (image Image) GetComments() (comments []Comment, err error) {
 	return comments, err
 }
 
-// CreateComment Done
+// CreateComment
 func (user User) CreateComment(imageID string, comment string) (err error) {
 
 	//Create Comment and map to Golang Interface
@@ -84,14 +84,14 @@ func (user User) CreateComment(imageID string, comment string) (err error) {
 	return err
 }
 
-// DeleteComment Done
+// DeleteComment
 func DeleteComment(commentID string) (err error) {
 
 	err = DB.Delete(commentID)
 	return err
 }
 
-// UpdateComment Future
+// UpdateComment
 func (user User) UpdateComment(comment Comment) (err error) {
 	return nil
 }

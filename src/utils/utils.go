@@ -20,6 +20,7 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+// Logger
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -35,6 +36,8 @@ func Logger(inner http.Handler, name string) http.Handler {
 		)
 	})
 }
+
+// LoggerCookie
 func LoggerCookie(session *sessions.Session) {
 	log.Printf(
 		"SessionCookieEvaluation: Auth: %t, Username: %s, UsernameMD5: %s",
@@ -43,6 +46,8 @@ func LoggerCookie(session *sessions.Session) {
 		session.Values["hashedusername"],
 	)
 }
+
+// FlushTempFiles
 func FlushTempFiles() {
 
 	workingDir, _ := os.Getwd()
@@ -57,6 +62,12 @@ func FlushTempFiles() {
 	}
 
 }
+
+// MakeTimeStamp
+func MakeTimeStamp() int64 {
+	return time.Now().UnixNano() / int64(time.Millisecond)
+}
+
 func filePathWalkDir(root string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -66,7 +77,4 @@ func filePathWalkDir(root string) ([]string, error) {
 		return nil
 	})
 	return files, err
-}
-func MakeTimeStamp() int64 {
-	return time.Now().UnixNano() / int64(time.Millisecond)
 }

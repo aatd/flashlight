@@ -24,7 +24,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// GetImages     	Finished
+// GetImages
 func GetImages(w http.ResponseWriter, r *http.Request) {
 
 	//Get Formdata
@@ -85,7 +85,7 @@ func GetImages(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetImage         Finished
+// GetImage
 func GetImage(w http.ResponseWriter, r *http.Request) {
 
 	//Response Parameter
@@ -109,7 +109,7 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetImageMetaData Finished
+// GetImageMetaData
 func GetImageMetaData(w http.ResponseWriter, r *http.Request) {
 
 	type ResponseModel struct {
@@ -168,7 +168,7 @@ func GetImageMetaData(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetMainPage      Finished
+// GetMainPage
 func GetMainPage(w http.ResponseWriter, r *http.Request) {
 
 	//Http Header
@@ -183,7 +183,7 @@ func GetMainPage(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Login            Finished
+// Login
 func Login(w http.ResponseWriter, r *http.Request) {
 
 	//Create Error messages
@@ -265,7 +265,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/users?action=userdata", http.StatusFound)
 }
 
-// Register         Finished
+// Register
 func Register(w http.ResponseWriter, r *http.Request) {
 
 	messages := make([]string, 0)

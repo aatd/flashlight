@@ -24,7 +24,13 @@ func init() {
 	store = sessions.NewCookieStore(key)
 }
 
-// Auth Done
+// Auth is used on all Handlers after a specitfic Client has logged in on Flashlight. It is a
+// middleare and is to be chained the repsective handerls after passing the authentification
+// process it will redirect the Client to our Mainpage and sets the Authetification Cookie.
+// With this Cookie the Frontend Applications registers the Cookie and pushes the Client
+// "/users/{userid}" Page.
+// Returns HTTP-Status Code 401 Unauthorized when authorization failed
+// Redirects to respective handler when authorization succeeded
 func Auth(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, err := store.Get(r, "session")

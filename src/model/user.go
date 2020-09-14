@@ -21,6 +21,7 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
+// User
 type User struct {
 	ID       string `json:"_id"`
 	Rev      string `json:"_rev"`
@@ -34,7 +35,7 @@ type User struct {
 //							Metohds									//
 //////////////////////////////////////////////////////////////////////
 
-// CreateUser        Finished
+// CreateUser
 func (user User) CreateUser() (err error) {
 
 	// Check wether username already exists
@@ -81,7 +82,7 @@ func (user User) CreateUser() (err error) {
 	return err
 }
 
-// GetUserByUsername Finished
+// GetUserByUsername
 func GetUserByUsername(username string) (user User, err error) {
 
 	// Check before annoying DB
@@ -105,7 +106,7 @@ func GetUserByUsername(username string) (user User, err error) {
 	return user, err
 }
 
-// GetUserByUsername Finished
+// GetUserByEmail
 func GetUserByEmail(username string) (user User, err error) {
 
 	// Check before annoying DB

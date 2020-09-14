@@ -22,7 +22,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// UploadImage  	Done
+// UploadImage let's a user with a valid session uploads a images with the respective metadata
+// such as it's description being uploaded to the DB. UploadeImage also creates it's respective mode.Image
+// Object stored wihting the DB to get properly allocated for all futher methods.
+// Returns HTTP-Status Code 409 Conflict when wrong data is submitted.
+// Returns HTTP-Status Code 201 Created when everything went okey.
 func UploadImage(w http.ResponseWriter, r *http.Request) {
 
 	//Get current Session
@@ -107,7 +111,10 @@ func UploadImage(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-// Logout       	Done
+// Logout updates the servers internal session store to not authentificated
+// and detstroies the respective client's cookie.
+// Returns HTTP-Status Code 409 Conflict when cookie couldn't be read.
+// Returns Set-Cookie: {Flashlight-SessionCookie} injected Response
 func Logout(w http.ResponseWriter, r *http.Request) {
 
 	//Empty Session
@@ -126,7 +133,10 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Userdata         Done
+// Userdata returns metadata over a loggedin user with a valid usersession.
+// No security issued data is returned wihtin this statement. Only metadata providing
+// the SPA served troughout "/" or "/users/{userid}" are to be filled correctly.
+// returns HTTP-Status Code 200 Ok and the Metadata with user information as "application/json".
 func Userdata(w http.ResponseWriter, r *http.Request) {
 
 	session, err := store.Get(r, "session")
@@ -160,7 +170,9 @@ func Userdata(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Profile Page 	Done
+// ProfilePage returns the Mainpage when logged in. Due to the Front-End Application is held as
+// a SPA actual Session management is also made within the pages logic. This Handlers purpose is
+// mainly when users first navigation in over "/users/{userid}" instead of "/"
 func ProfilePage(w http.ResponseWriter, r *http.Request) {
 
 	//Http Header
@@ -174,7 +186,9 @@ func ProfilePage(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// CommentImage		Done
+// CommentImage comments an Image with respective id and authentificated usersession. Over these
+// informations CommentImage extraces the user commenting the image and saves these up wihtin the
+// used DB.
 func CommentImage(w http.ResponseWriter, r *http.Request) {
 
 	//Get current Session
@@ -226,7 +240,10 @@ func CommentImage(w http.ResponseWriter, r *http.Request) {
 	w.Write(responseJSON)
 }
 
-// DeleteImage  	Done
+// DeleteImage deletes an image with respective id and authentificated usersession. This method only
+// works when the the image is wihting the set of the user. If not or anything else's not conforming
+// withing the specs DeleteImage responses with the HTTP-Status Code 409 Conflict.
+// DeleteImage returns HTTP-Status Code 202 Accepted when everything went okey.
 func DeleteImage(w http.ResponseWriter, r *http.Request) {
 
 	//Get current Session
@@ -269,7 +286,10 @@ func DeleteImage(w http.ResponseWriter, r *http.Request) {
 	w.Write(responseJSON)
 }
 
-// LikeImage    	Done
+// LikeImage adds or removes a like to a image with respective id and binds it to a authentificated usersession.
+// It may add a like when user has not liked the image before and removes it else. Returns HTTP-Status Code 202
+// Accepted when the Like Object was deleted due to users unliking it else returns HTTP-Status Code 201 Created
+// when liked the respecitve image.
 func LikeImage(w http.ResponseWriter, r *http.Request) {
 
 	type ResponseModel struct {
@@ -295,7 +315,7 @@ func LikeImage(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	//Creat or Delete Like depedngin on users status
+	//Creat or Delete Like depending on users status
 	isAlreadyLiked, likeID, err := user.GetLike(imageID)
 	if err != nil {
 
@@ -369,7 +389,8 @@ func LikeImage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetUserImage 	Done
+// GetUserImages returns all images a authentificated user with respective valid usersession has uploaded to
+// Flashlight. Returns HTTP-Status Code 200 Ok.
 func GetUserImages(w http.ResponseWriter, r *http.Request) {
 
 	//Get current Session
@@ -439,7 +460,10 @@ func GetUserImages(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetLike          Done
+// GetLike gives a respective valid usersession validation for a specific image with id located wihtin the
+// query variable "imageID" is liked or not.
+// Returns HTTP-Status Code 200 Ok and a JSON-Object if usersession and imageID is valid.
+// Returns HTTP-Status Code 409 Conflict if not.
 func GetLike(w http.ResponseWriter, r *http.Request) {
 
 	type ResponseModel struct {

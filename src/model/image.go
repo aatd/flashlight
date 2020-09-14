@@ -38,7 +38,7 @@ type Image struct {
 //							Methods									//
 //////////////////////////////////////////////////////////////////////
 
-// DeleteImage Done
+// DeleteImage
 func (user User) DeleteImage(imageID string) (err error) {
 
 	//Delete all Concering Likes
@@ -85,7 +85,7 @@ func (user User) DeleteImage(imageID string) (err error) {
 
 }
 
-// GetImage    Finished
+// GetImage
 func GetImage(imageID string) (data []byte, mimeType string, err error) {
 
 	//Get Imag from DB
@@ -98,7 +98,7 @@ func GetImage(imageID string) (data []byte, mimeType string, err error) {
 	return data, imageModel["mimetype"].(string), err
 }
 
-// GetImage    Finished
+// GetImage
 func GetImageMetaData(imageID string) (image Image, err error) {
 
 	//Get Imag from DB
@@ -115,7 +115,7 @@ func GetImageMetaData(imageID string) (image Image, err error) {
 	return image, err
 }
 
-// GetImages   Finished
+// GetImages
 func GetImageIDs(recordTimeInMilliseconds string) (images []string, err error) {
 
 	//DB Query
@@ -157,7 +157,7 @@ func GetImageIDs(recordTimeInMilliseconds string) (images []string, err error) {
 	return imageListModel, err
 }
 
-// CreateImage Finished
+// CreateImage
 func (user User) CreateImage(bytes []byte, filename string, description string, uploadtime int64) (err error) {
 
 	//Assemble Image Data
@@ -211,7 +211,7 @@ func (user User) CreateImage(bytes []byte, filename string, description string, 
 	return err
 }
 
-// GetImages   Finished
+// GetImages
 func (user User) GetImages() (images []Image, err error) {
 
 	//DB Query
@@ -244,7 +244,7 @@ func (user User) GetImages() (images []Image, err error) {
 
 }
 
-// UpdateImage Future
+// UpdateImage
 func (user User) UpdateImage() (err error) {
 	return nil
 }

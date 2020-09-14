@@ -16,6 +16,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var tmpl *template.Template
+
+func init() {
+	//Parse all views when starting the server
+	tmpl = template.Must(template.ParseGlob("src/views/*.html"))
+}
+
+// Routes the Collection of all Routes for Flashlight
+type Routes []Route
+
+// Route defines all functios and metadata of a Route itself
 type Route struct {
 	Name        string
 	Method      string
@@ -23,15 +34,10 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
-type Routes []Route
-
-var tmpl *template.Template
-
-func init() {
-	tmpl = template.Must(template.ParseGlob("src/views/*.html"))
-}
-
-func NewRouter() *mux.Router {
+// CreateRouter Creates a new Router for the Flashlight Application. Reads all
+// Routes from the controller.Routes and handles the routing for the static content
+// (css/js/icons) of Flashlight
+func CreateRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
 
@@ -67,6 +73,7 @@ func NewRouter() *mux.Router {
 	return router
 }
 
+// Collection of all Routes for the Application. Middleware chaines are also defined wihting this collection
 var routes = Routes{
 
 	//////////////////////////////////////////////////////////////////////

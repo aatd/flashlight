@@ -1,6 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          Sessionmanagment                                        //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//#region XHR-Methods
+
 /**
  * 
  * @param {Event} event
@@ -246,10 +249,14 @@ function getUserdata() {
 
 }
 
+//#endregion
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Serverside Communication                                    //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//#region XHR-Methods
+
 /**
  * 
  * @param {Event} event 
@@ -847,12 +854,13 @@ function deleteImage(imageID) {
 
 }
 
+//#endregion
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            UI Changer                                            //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Pages
+//#region Pages
 /**
  * 
  */
@@ -880,8 +888,9 @@ function openPublicPage(){
 
 }
 
+//#endregion
 
-// Like Changer
+//#region Like
 /**
  * 
  * @param {HTMLButtonElement} buttonElement 
@@ -965,8 +974,9 @@ function updateLikesStatus(){
     }
 }
 
+//#endregion
 
-//Comments
+//#region Comments
 /**
  * 
  * @param {string} imageID 
@@ -1060,8 +1070,9 @@ function showUnshowAllCommentButtons(){
 
 }
 
+//#endregion
 
-//Images
+//#region Images
 /**
  * 
  * @param {HTMLElement} htmlElement 
@@ -1250,8 +1261,9 @@ function getImageCardID(htmlElement) {
     }
 }
 
+//#endregion
 
-//Sessionmanagement
+//#region Sessionmanagement
 /**
  * 
  */
@@ -1373,7 +1385,9 @@ function unsetUserdata() {
 
 }
 
-//Modals
+//#endregion
+
+//#region Modals
 /**
  * 
  */
@@ -1407,10 +1421,14 @@ function unshowLoadingScreen() {
 
 }
 
+//#endregion
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                               Setup                                              //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//#region MAIN
+
 //Set Loadingscreenmodal and make escaping impossible
 $('#loadingscreen').modal({backdrop: 'static', keyboard: false, show:false});
 
@@ -1454,3 +1472,5 @@ window.onscroll = function() {
         getImageCards(applicationState.lastimageDateTime);
     }
 };
+
+//#endregion

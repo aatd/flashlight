@@ -15,7 +15,7 @@ import (
 	couchdb "github.com/leesper/couchdb-golang"
 )
 
-// Packge Vars
+// DB
 var DB *couchdb.Database
 var imageDocID string
 
@@ -41,7 +41,7 @@ func init() {
 
 }
 
-// GenerateUUID returns a random 128-bit UUID
+// GenerateUUID returns a random 128-bit UUID as string
 func GenerateUUID() string {
 	b := make([]byte, 16)
 	_, err := rand.Read(b)
