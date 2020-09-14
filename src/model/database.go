@@ -15,7 +15,7 @@ import (
 	couchdb "github.com/leesper/couchdb-golang"
 )
 
-// DB
+// DB is the reference to the intilized central Database within Flashlight
 var DB *couchdb.Database
 var imageDocID string
 

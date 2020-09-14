@@ -18,7 +18,11 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
-// Like
+// Like is the Model which stores all required information which
+// contains a flag describing an authenticated User a social/ideal/personal
+// admiration for a model.Image which in further is referred to a "Like".
+// For simplicity all cross references to other Flashlight Models
+// (e.g. models.Image) are only stored to their respective "_id"
 type Like struct {
 	ID      string `json:"_id"`
 	Rev     string `json:"_rev"`

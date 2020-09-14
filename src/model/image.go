@@ -21,6 +21,11 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
+// Image is the Model which stores all required information to
+// contain a Image and all it's required Metadata such as all model.Comment
+// id's and modelLike id's.
+// For simplicity all cross references to other Flashlight Models
+// (e.g. models.Image) are only stored to their respective "_id"
 type Image struct {
 	ID            string `json:"_id"`
 	Rev           string `json:"_rev"`

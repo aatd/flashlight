@@ -21,7 +21,11 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
-// User
+// User is the Model which stores all required information to
+// contain a real user using Flashlight and have a valid interaction
+// with the Flashlight-API.
+// For simplicity all cross references to other Flashlight Models (e.g.
+// models.Image) are only stored to their respective "_id"
 type User struct {
 	ID       string `json:"_id"`
 	Rev      string `json:"_rev"`
@@ -41,18 +45,18 @@ func (user User) CreateUser() (err error) {
 	// Check wether username already exists
 	userInDBByName, err := GetUserByUsername(user.Name)
 	if err == nil && userInDBByName.Name == user.Name {
-		return errors.New("Benutzername exisitert bereits.")
+		return errors.New("Benutzername exisitert bereits")
 	}
 
 	// Check wether username already exists
 	userInDBByEmail, err := GetUserByEmail(user.Email)
 	if err == nil && userInDBByEmail.Email == user.Email {
-		return errors.New("Emailadresse bereits vergeben.")
+		return errors.New("Emailadresse bereits vergeben")
 	}
 
 	//Check if
 	if userInDBByEmail.ID != userInDBByName.ID {
-		return errors.New("Benutzername und Emailadresse bereits vergeben.")
+		return errors.New("Benutzername und Emailadresse bereits vergeben")
 	}
 
 	// Hash password and set on User
@@ -94,7 +98,7 @@ func GetUserByUsername(username string) (user User, err error) {
 	query := fmt.Sprintf(`{"selector": {"type": "User","name":"%s"}}`, username)
 	u, err := DB.QueryJSON(query)
 	if err != nil || len(u) != 1 {
-		return User{}, errors.New("Benutzername existiert nicht.")
+		return User{}, errors.New("Benutzername existiert nicht")
 	}
 
 	// Convert to Golang Map

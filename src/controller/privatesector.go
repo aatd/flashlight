@@ -10,7 +10,6 @@ package controller
 
 import (
 	"encoding/json"
-	"html/template"
 	"io/ioutil"
 	"model"
 	"net/http"
@@ -179,8 +178,8 @@ func ProfilePage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	//Return Webpage
-	tmpl = template.Must(template.ParseGlob("src/views/*.html"))
+	//For Debug only so the server musnt bne started all over again when .html file is rewirtten again!
+	//tmpl = template.Must(template.ParseGlob("src/views/*.html"))
 
 	tmpl.ExecuteTemplate(w, "StartPage", nil)
 

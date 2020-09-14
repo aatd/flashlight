@@ -13,7 +13,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"html/template"
 	"net/http"
 	"net/mail"
 	"strings"
@@ -24,7 +23,11 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// GetImages
+// GetImages returns a list of id's based on query variable "lastrecordtime".
+// These id's containing references to images. These id's are sorted from
+// recent to older. The SPA uses these id's to get the model.Image Object through
+// model.GetImage.
+// Returns HTTP-Status Code 200 Ok and a JSON-Object with imageID's.
 func GetImages(w http.ResponseWriter, r *http.Request) {
 
 	//Get Formdata
@@ -41,38 +44,14 @@ func GetImages(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	/*
-		//Get Images
-		images := make([]model.Image, 0)
-		for i := 0; i < len(imagesIDs); i++ {
-
-			image, err := model.GetImageMetaData(imagesIDs[i])
-			if err != nil {
-
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(err.Error()))
-				return
-
-			}
-			images = append(images, image)
-
-		}*/
-
-	//Make Response JSON
+	//Make Response Model
 	responseModel := struct {
 		ImagesIDs []string
 	}{
 		ImagesIDs: imageIDs,
 	}
 
-	//Make Response JSON
-	//responseModel := struct {
-	//	LastRecordedTime int64
-	//	Images           []model.Image
-	//}{
-	//	LastRecordedTime: images[len(images)-1].UploadTime,
-	//	Images:           images,
-	//}
+	//Make ResponeJSON
 	responseJSON, err := json.Marshal(responseModel)
 	if err != nil {
 		panic(err)
@@ -85,7 +64,12 @@ func GetImages(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetImage
+// GetImage returns a image file based on a valid id. The respective
+// image file is retrieved through the query variable "imageID".
+// Returns HTTP-Status Code 404 NotFound when imageID hasn't a
+// respective file assoicated with it in the DB.
+// Returns HTTP-Status Code 200 Ok and the image file with respecitve
+// MIME-Type.
 func GetImage(w http.ResponseWriter, r *http.Request) {
 
 	//Response Parameter
@@ -109,7 +93,12 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetImageMetaData
+// GetImageMetaData returns a model.Image Object based on a valid id. The respective
+// model.Image Object is retrieved through the query variable "imageID".
+// Returns HTTP-Status Code 404 NotFound when imageID hasn't a
+// respective model.Image Obejct assoicated with it in the DB.
+// Returns HTTP-Status Code 200 Ok and the JSON-Object with respective model.Image Object
+// and associated model.Comments Objects.
 func GetImageMetaData(w http.ResponseWriter, r *http.Request) {
 
 	type ResponseModel struct {
@@ -168,7 +157,10 @@ func GetImageMetaData(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetMainPage
+// GetMainPage returns the MainPage. After called most of the Tasks (e.g. Servercommunication)
+// is done by this template with it's respective static files.
+// Returns HTTP-Status Code 200 Ok and the HTML-Document with respective template parsed by
+// controller.tmpl at it's package intitializaion step at controller.init()
 func GetMainPage(w http.ResponseWriter, r *http.Request) {
 
 	//Http Header
@@ -176,14 +168,18 @@ func GetMainPage(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//For Debug only so the server musnt bne started all over again when .html file is rewirtten again!
-	tmpl = template.Must(template.ParseGlob("src/views/*.html"))
+	//tmpl = template.Must(template.ParseGlob("src/views/*.html"))
 
 	//Return Webpage
 	tmpl.ExecuteTemplate(w, "StartPage", nil)
 
 }
 
-// Login
+// Login makes an Login attempt to Flashlight. All input are only parsed from posted Form.
+// Returns HTTP-Status Code 202 Found and Set-Cookie with respective Authentification
+// Session Cookie accepted in the controller.Auth Middleware.
+// Returns HTTP-Status Code 409 Conflict and error messages describing derived probelm
+// with the Login-Attempt
 func Login(w http.ResponseWriter, r *http.Request) {
 
 	//Create Error messages
@@ -265,7 +261,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/users?action=userdata", http.StatusFound)
 }
 
-// Register
+// Register makes an attempt to create a new User. All input is checked wether it already exits
+// in DB or credentials are inputted double to verify orignallity of new User.
+// Returns HTTP-Status Code 201 Created creates a new model.User-Obejct within DB and Set-Cookie with respective
+// authentification Session Cookie accepted in the controller.Auth Middleware.
+// Returns HTTP-Status Code 409 Conflict and error messages describing derived problem
+// with the Register-Attempt
 func Register(w http.ResponseWriter, r *http.Request) {
 
 	messages := make([]string, 0)

@@ -18,6 +18,10 @@ import (
 //							Model									//
 //////////////////////////////////////////////////////////////////////
 
+// Comment is the Model which stores all required information to
+// contain a literal comment for a model.Image. For simplicity all cross
+// references to other Flashlight Models (e.g. models.Image) are only stored
+// to their respective "_id"
 type Comment struct {
 	ID         string `json:"_id"`
 	Rev        string `json:"_rev"`
