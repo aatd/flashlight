@@ -1,4 +1,4 @@
-# Flashlight - By AATD
+# Flashlight
 ### This Application is a Instagram-like Web-App implemented for the [University of Applied Sciences Cologne]() for the Subject **Webprogramming**. By implementing this Project the Student should learn the Basic anatomy of a Webapplication by understanding the composition of the usage of Databases, Frontend-Languages and a Backend.Software Deployed on a Webserver. 
 
 ---
