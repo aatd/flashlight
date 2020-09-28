@@ -4,11 +4,11 @@
 ---
 
 ## Specific Languages and Framworks used:
-- Frontend-Languages: [HTML5](), [CSS3](), [Javascript-ECMAScript]()
-- Frontend-Framworks: [Bootstrap]()
-- Backend-Langauge: [Golang]()
-- Backend-Framworks: [Gorilla-Mux](), [Gorilla-Session](), [Leesper-CouchDB](), [net/http](), [html/template]()
-- DBMS: [Apache Couch-DB]() 
+- Frontend-Languages: [HTML5](https://en.wikipedia.org/wiki/HTML5), [CSS3](https://en.wikipedia.org/wiki/CSS), [Javascript-ECMAScript](https://en.wikipedia.org/wiki/ECMAScript)
+- Frontend-Framworks: [Bootstrap](https://getbootstrap.com/docs/3.3/css/)
+- Backend-Langauge: [Golang](https://golang.org/doc/)
+- Backend-Framworks: [Gorilla-Mux](https://github.com/gorilla/mux), [Gorilla-Session](https://github.com/gorilla/sessions), [Leesper-CouchDB](https://godoc.org/github.com/leesper/couchdb-golang), [net/http](https://golang.org/pkg/net/http/), [html/template](https://golang.org/pkg/html/template/)
+- DBMS: [Apache Couch-DB](https://couchdb.apache.org/) 
 
 ---
 
