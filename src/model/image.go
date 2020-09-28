@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"mime"
 	"path/filepath"
+	"utils"
 )
 
 //////////////////////////////////////////////////////////////////////
@@ -168,7 +169,7 @@ func (user User) CreateImage(bytes []byte, filename string, description string, 
 	//Assemble Image Data
 	md5HashInBytes := md5.Sum([]byte(user.Name))
 	md5HashedFilename := hex.EncodeToString(md5HashInBytes[:])
-	md5HashedFilename += GenerateUUID()                      //Hash filename with UUID so we don't have problems with same filenames
+	md5HashedFilename += utils.GenerateUUID()                //Hash filename with UUID so we don't have problems with same filenames
 	mimeType := mime.TypeByExtension(filepath.Ext(filename)) //MimeType
 
 	//Save new ImageMetadata

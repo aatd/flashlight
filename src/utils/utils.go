@@ -10,6 +10,8 @@
 package utils
 
 import (
+	"crypto/rand"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -52,9 +54,9 @@ func FlushTempFiles() {
 
 	workingDir, _ := os.Getwd()
 
-	tempDir := workingDir + "/temp"
+	tempDir := workingDir + "../temp"
 	if runtime.GOOS == "windows" {
-		tempDir = workingDir + "\\temp"
+		tempDir = workingDir + "..\\temp"
 	}
 	allFilenames, _ := filePathWalkDir(tempDir)
 	for i := 0; i < len(allFilenames); i++ {
@@ -67,6 +69,22 @@ func FlushTempFiles() {
 func MakeTimeStamp() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
 }
+
+// GenerateUUID returns a random 128-bit UUID as string
+func GenerateUUID() string {
+	b := make([]byte, 16)
+	_, err := rand.Read(b)
+	if err != nil {
+		return ""
+	}
+
+	uuid := fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
+	return uuid
+}
+
+//////////////////////////////////////////////////////////////////////
+//							Helpers									//
+//////////////////////////////////////////////////////////////////////
 
 func filePathWalkDir(root string) ([]string, error) {
 	var files []string

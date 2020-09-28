@@ -20,7 +20,7 @@ var tmpl *template.Template
 
 func init() {
 	//Parse all views when starting the server
-	tmpl = template.Must(template.ParseGlob("src/views/*.html"))
+	tmpl = template.Must(template.ParseGlob("views/*.html"))
 }
 
 // Routes the Collection of all Routes for Flashlight

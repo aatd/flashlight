@@ -9,7 +9,6 @@
 package model
 
 import (
-	"crypto/rand"
 	"fmt"
 
 	couchdb "github.com/leesper/couchdb-golang"
@@ -39,16 +38,4 @@ func init() {
 	//imageDocID = allImageRef[0]["_id"].(string)
 	//fmt.Printf("DB: ID of where all Images are is: %s.\n", imageDocID)
 
-}
-
-// GenerateUUID returns a random 128-bit UUID as string
-func GenerateUUID() string {
-	b := make([]byte, 16)
-	_, err := rand.Read(b)
-	if err != nil {
-		return ""
-	}
-
-	uuid := fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-	return uuid
 }
